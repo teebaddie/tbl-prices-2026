@@ -11,7 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;700&family=Poppins:wght@500&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.26.4/babel.min.js"></script>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html, body, #root { min-height: 100vh; background: #000; }
@@ -36,7 +36,7 @@
   }
 </script>
 
-<script type="text/babel">
+<script type="text/babel" data-presets="react">
 const { useState, useMemo, useEffect } = React;
 
 // ── Firestore REST API ──
@@ -157,7 +157,7 @@ const DEFAULT_SERVICES = {
     { name: "Trap Tox / Shoulder Slimming", price: 420000 },
   ],
   "Botox – Add-On": [
-    { name: "Additional Units (per unit)", price: 8000 },
+    { name: "Additional Units (per unit)", price: 8000, perUnit: true, unitPrice: 8000, minUnits: 20 },
   ],
   "Body Sculpting & Sauna": [
     { name: "Baddie Sculpting 1hr Session", price: 45000 }, { name: "Baddie Sculpting + Sauna Blanket", price: 55000 },
@@ -167,6 +167,7 @@ const DEFAULT_SERVICES = {
     { name: "Post-OP Lymphatic Drainage Massage", price: 45000 }, { name: "The Cookie Reset Vaginal Rejuvenation", price: 75000 },
     { name: "Teeth Whitening - Gold", price: 40000 }, { name: "Teeth Whitening - Diamond", price: 50000 },
     { name: "Numbing Cream (per area)", price: 10000 }, { name: "VIP Room - Single Person", price: 15000 }, { name: "VIP Room - Couple", price: 25000 },
+    { name: "After Work Hours", price: 50000 },
   ],
   "Home Service": [
     { name: "Home Service - Within Lekki Phase 1", price: 50000 }, { name: "Home Service - Within the Island", price: 100000 }, { name: "Home Service - Mainland", price: 200000 },
@@ -200,6 +201,8 @@ const DEFAULT_SERVICES = {
     { name: "Head, Neck & Shoulder 60 mins", price: 65000 }, { name: "Hand Massage 30 mins", price: 20000 },
     { name: "Foot & Leg Massage 30 mins", price: 35000 }, { name: "Foot & Leg Massage 45 mins", price: 45000 },
     { name: "Every 10 Minute Increment", price: 10000 },
+    { name: "Hand Massage Add-On", price: 10000 }, { name: "Foot & Leg Massage Add-On", price: 15000 },
+    { name: "Hand & Feet Massage Add-On", price: 22000 }, { name: "Brows", price: 18000 },
   ],
   "Laser - Women (Intro)": [
     { name: "Upper Lip (W-Intro)", price: 18000 }, { name: "Chin (W-Intro)", price: 30000 }, { name: "Chin + Upper Lip (W-Intro)", price: 45000 },
@@ -209,6 +212,7 @@ const DEFAULT_SERVICES = {
     { name: "Buttocks/Perianal Add-On (W-Intro)", price: 45000 }, { name: "Chest (W-Intro)", price: 50000 }, { name: "Abdomen (W-Intro)", price: 45000 },
     { name: "Full Back (W-Intro)", price: 65000 }, { name: "Back + Shoulders (W-Intro)", price: 95000 }, { name: "Half Legs (W-Intro)", price: 60000 },
     { name: "Full Legs (W-Intro)", price: 85000 }, { name: "Full Body (W-Intro)", price: 275000 },
+    { name: "Brows (W-Intro)", price: 25000 },
   ],
   "Laser - Women (Standard)": [
     { name: "Upper Lip (W-Std)", price: 25000 }, { name: "Chin (W-Std)", price: 45000 }, { name: "Chin + Upper Lip (W-Std)", price: 70000 },
@@ -218,6 +222,7 @@ const DEFAULT_SERVICES = {
     { name: "Buttocks/Perianal Add-On (W-Std)", price: 60000 }, { name: "Chest (W-Std)", price: 75000 }, { name: "Abdomen (W-Std)", price: 60000 },
     { name: "Full Back (W-Std)", price: 95000 }, { name: "Back + Shoulders (W-Std)", price: 125000 }, { name: "Half Legs (W-Std)", price: 85000 },
     { name: "Full Legs (W-Std)", price: 120000 }, { name: "Full Body (W-Std)", price: 395000 },
+    { name: "Brows (W-Std)", price: 25000 },
   ],
   "Laser - Men (Intro)": [
     { name: "Upper Lip (M-Intro)", price: 25000 }, { name: "Chin (M-Intro)", price: 40000 }, { name: "Chin + Upper Lip (M-Intro)", price: 60000 },
@@ -227,6 +232,7 @@ const DEFAULT_SERVICES = {
     { name: "Chest (M-Intro)", price: 65000 }, { name: "Abdomen (M-Intro)", price: 60000 }, { name: "Full Back (M-Intro)", price: 85000 },
     { name: "Back + Shoulders (M-Intro)", price: 120000 }, { name: "Half Legs (M-Intro)", price: 85000 }, { name: "Full Legs (M-Intro)", price: 110000 },
     { name: "Full Body (M-Intro)", price: 325000 },
+    { name: "Head (M-Intro)", price: 140000 }, { name: "Brows (M-Intro)", price: 35000 },
   ],
   "Laser - Men (Standard)": [
     { name: "Upper Lip (M-Std)", price: 35000 }, { name: "Chin (M-Std)", price: 55000 }, { name: "Chin + Upper Lip (M-Std)", price: 85000 },
@@ -236,6 +242,7 @@ const DEFAULT_SERVICES = {
     { name: "Chest (M-Std)", price: 95000 }, { name: "Abdomen (M-Std)", price: 75000 }, { name: "Full Back (M-Std)", price: 120000 },
     { name: "Back + Shoulders (M-Std)", price: 155000 }, { name: "Half Legs (M-Std)", price: 110000 }, { name: "Full Legs (M-Std)", price: 155000 },
     { name: "Full Body (M-Std)", price: 465000 },
+    { name: "Head (M-Std)", price: 195000 },
   ],
 };
 
@@ -263,8 +270,26 @@ function buildFromStored(stored) {
     if (s && Array.isArray(s)) {
       out[cat] = s.map(si => {
         const def = defs.find(d => d.name === si.name);
-        return def ? { ...def, price: Number(si.price) || 0 } : { name: si.name, price: Number(si.price) || 0 };
+        if (def) {
+          const merged = { ...def };
+          if (def.perUnit) {
+            // Per-unit: the rate lives in unitPrice. Use a stored override if the admin edited it.
+            merged.unitPrice = (si.unitPrice != null ? Number(si.unitPrice) : def.unitPrice) || 0;
+            if (si.minUnits != null) merged.minUnits = Number(si.minUnits) || def.minUnits;
+            merged.price = merged.unitPrice;
+          } else {
+            merged.price = Number(si.price) || 0;
+          }
+          return merged;
+        }
+        if (si.perUnit) {
+          const up = Number(si.unitPrice) || Number(si.price) || 0;
+          return { name: si.name, perUnit: true, unitPrice: up, minUnits: Number(si.minUnits) || 1, price: up };
+        }
+        return { name: si.name, price: Number(si.price) || 0 };
       });
+      // Merge in any new default items (price-list additions) not present in stored data
+      defs.forEach(d => { if (!out[cat].some(x => x.name === d.name)) out[cat].push(clone(d)); });
     } else { out[cat] = clone(defs); }
   });
   // Merge in any new default categories not yet in storage
@@ -276,7 +301,13 @@ function buildFromStored(stored) {
 
 function serialize(catOrder, prices) {
   const svcs = {};
-  catOrder.forEach(cat => { svcs[cat] = (prices[cat] || []).map(({ name, price }) => ({ name, price })); });
+  catOrder.forEach(cat => {
+    svcs[cat] = (prices[cat] || []).map(item => {
+      const base = { name: item.name, price: item.price };
+      if (item.perUnit) { base.perUnit = true; base.unitPrice = item.unitPrice; base.minUnits = item.minUnits; }
+      return base;
+    });
+  });
   return JSON.stringify({ categories: catOrder, services: svcs });
 }
 
@@ -379,12 +410,21 @@ function App() {
   const toggleCat = cat => setOpenCat(p => p === cat ? null : cat);
   const toggleSvc = (cat, idx) => {
     const key = `${cat}|||${idx}`;
-    setSelected(p => { const n = { ...p }; n[key] ? delete n[key] : (n[key] = { cat, idx, qty: 1 }); return n; });
+    const svc = services[cat]?.[idx];
+    const startQty = svc && svc.perUnit ? (svc.minUnits || 1) : 1;
+    setSelected(p => { const n = { ...p }; n[key] ? delete n[key] : (n[key] = { cat, idx, qty: startQty }); return n; });
   };
   const updateQty = (key, d) => setSelected(p => {
     const n = { ...p }; if (!n[key]) return n;
     const q = n[key].qty + d;
     if (q <= 0) delete n[key]; else n[key] = { ...n[key], qty: q }; return n;
+  });
+  // Per-unit counter: starts at the minimum, +/- steps by one unit, never drops below the minimum.
+  const stepUnits = (key, delta, min) => setSelected(p => {
+    const n = { ...p }; if (!n[key]) return n;
+    const cur = parseInt(n[key].qty, 10) || min;
+    n[key] = { ...n[key], qty: Math.max(min, cur + delta) };
+    return n;
   });
 
   const selItems = useMemo(() =>
@@ -434,7 +474,7 @@ function App() {
     } else { setPwError("Incorrect password."); }
   };
 
-  const setPrice = (cat, idx, val) => setEditData(p => { const n = clone(p); n.prices[cat][idx].price = val; return n; });
+  const setPrice = (cat, idx, val) => setEditData(p => { const n = clone(p); const it = n.prices[cat][idx]; it.price = val; if (it.perUnit) it.unitPrice = val; return n; });
   const deleteSvc = (cat, idx) => setEditData(p => { const n = clone(p); n.prices[cat].splice(idx, 1); return n; });
   const addSvc = (cat) => {
     if (!addForm || addForm.cat !== cat || !addForm.name.trim()) return;
@@ -530,7 +570,12 @@ function App() {
     setSaveStatus("saving");
     const final = {}, storage = {};
     editData.catOrder.forEach(cat => {
-      final[cat] = (editData.prices[cat] || []).map(item => ({ ...item, price: parseInt(String(item.price).replace(/[^0-9]/g, ""), 10) || 0 }));
+      final[cat] = (editData.prices[cat] || []).map(item => {
+        const price = parseInt(String(item.price).replace(/[^0-9]/g, ""), 10) || 0;
+        const out = { ...item, price };
+        if (item.perUnit) out.unitPrice = parseInt(String(item.unitPrice != null ? item.unitPrice : item.price).replace(/[^0-9]/g, ""), 10) || 0;
+        return out;
+      });
       storage[cat] = final[cat].map(({ name, price }) => ({ name, price }));
     });
     const payload = serialize(editData.catOrder, final);
@@ -765,7 +810,7 @@ function App() {
                   return (
                     <div key={key} className="sr" onClick={() => toggleSvc(cat, idx)} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "12px 16px", cursor: "pointer", background: isSel ? "rgba(243,194,215,0.08)" : "transparent", borderLeft: isSel ? `3px solid ${PINK}` : "3px solid transparent" }}>
                       <div><div style={{ fontSize: 13, color: isSel ? PINK : "#e0e0e0" }}>{service.name}</div><div style={{ fontSize: 10, color: "#555", marginTop: 2 }}>{cat}</div></div>
-                      <div style={{ textAlign: "right" }}><div style={{ fontSize: 13, color: PINK, fontWeight: 600 }}>{fmt(service.price)}</div>{isSel && <div style={{ fontSize: 10, color: "#5a8a5a" }}>✓ Added</div>}</div>
+                      <div style={{ textAlign: "right" }}><div style={{ fontSize: 13, color: PINK, fontWeight: 600 }}>{service.perUnit ? `${fmt(service.unitPrice)} / unit` : fmt(service.price)}</div>{isSel && <div style={{ fontSize: 10, color: "#5a8a5a" }}>✓ Added</div>}</div>
                     </div>
                   );
                 })}
@@ -799,8 +844,17 @@ function App() {
                             </div>
                           </div>
                           <div style={{ textAlign: "right", flexShrink: 0, marginLeft: 12 }}>
-                            <div style={{ fontSize: 13, color: PINK }}>{fmt(svc.price)}</div>
-                            <div style={{ fontSize: 10, color: "#777" }}>{fmt(Math.round(svc.price * (1 + VAT_RATE)))} +VAT</div>
+                            {svc.perUnit ? (
+                              <>
+                                <div style={{ fontSize: 13, color: PINK }}>{fmt(svc.unitPrice)} <span style={{ fontSize: 10, color: "#777" }}>/ unit</span></div>
+                                <div style={{ fontSize: 10, color: "#777" }}>min {svc.minUnits} units</div>
+                              </>
+                            ) : (
+                              <>
+                                <div style={{ fontSize: 13, color: PINK }}>{fmt(svc.price)}</div>
+                                <div style={{ fontSize: 10, color: "#777" }}>{fmt(Math.round(svc.price * (1 + VAT_RATE)))} +VAT</div>
+                              </>
+                            )}
                           </div>
                         </div>
                       );
@@ -829,22 +883,40 @@ function App() {
                   <span style={{ fontSize: 11, color: "#555", letterSpacing: 2, textTransform: "uppercase" }}>Selected Services</span>
                   <button onClick={clearAll} style={{ ...b, fontSize: 11, color: "#c55", background: "rgba(255,80,80,0.08)", border: "1px solid rgba(255,80,80,0.2)", borderRadius: 6, padding: "4px 10px" }}>Clear All</button>
                 </div>
-                {selItems.map(({ key, service, qty }) => (
+                {selItems.map(({ key, service, qty }) => {
+                  const perUnit = !!service.perUnit;
+                  const rate = perUnit ? service.unitPrice : service.price;
+                  const lineTotal = rate * (parseInt(qty, 10) || 0);
+                  return (
                   <div key={key} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "12px 16px", borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
                     <div style={{ flex: 1 }}>
                       <div style={{ fontSize: 13, color: "#e0e0e0" }}>{service.name}</div>
-                      <div style={{ fontSize: 11, color: "#555", marginTop: 2 }}>{fmt(service.price)} each</div>
+                      <div style={{ fontSize: 11, color: "#555", marginTop: 2 }}>{fmt(rate)} {perUnit ? "/ unit" : "each"}{perUnit ? ` · min ${service.minUnits}` : ""}</div>
                     </div>
-                    <div style={{ display: "flex", alignItems: "center", gap: 8, marginLeft: 12 }}>
-                      <button onClick={() => updateQty(key, -1)} style={{ ...b, width: 26, height: 26, borderRadius: "50%", border: "1px solid #333", background: "none", color: "#888", fontSize: 17 }}>−</button>
-                      <span style={{ fontSize: 13, minWidth: 20, textAlign: "center", color: PINK, fontWeight: 600 }}>{qty}</span>
-                      <button onClick={() => updateQty(key, 1)} style={{ ...b, width: 26, height: 26, borderRadius: "50%", border: "1px solid #333", background: "none", color: "#888", fontSize: 17 }}>+</button>
-                    </div>
+                    {perUnit ? (
+                      <div style={{ display: "flex", alignItems: "center", gap: 8, marginLeft: 12 }}>
+                        <button onClick={() => stepUnits(key, -1, service.minUnits)} disabled={(parseInt(qty, 10) || service.minUnits) <= service.minUnits}
+                          style={{ ...b, width: 26, height: 26, borderRadius: "50%", border: "1px solid #333", background: "none", color: (parseInt(qty, 10) || service.minUnits) <= service.minUnits ? "#444" : "#888", fontSize: 17, cursor: (parseInt(qty, 10) || service.minUnits) <= service.minUnits ? "default" : "pointer" }}>−</button>
+                        <span style={{ minWidth: 34, textAlign: "center", color: PINK, fontWeight: 600, lineHeight: 1.1 }}>
+                          <span style={{ fontSize: 13 }}>{qty}</span>
+                          <span style={{ fontSize: 9, color: "#777", display: "block", fontWeight: 400 }}>units</span>
+                        </span>
+                        <button onClick={() => stepUnits(key, 1, service.minUnits)}
+                          style={{ ...b, width: 26, height: 26, borderRadius: "50%", border: "1px solid #333", background: "none", color: "#888", fontSize: 17 }}>+</button>
+                      </div>
+                    ) : (
+                      <div style={{ display: "flex", alignItems: "center", gap: 8, marginLeft: 12 }}>
+                        <button onClick={() => updateQty(key, -1)} style={{ ...b, width: 26, height: 26, borderRadius: "50%", border: "1px solid #333", background: "none", color: "#888", fontSize: 17 }}>−</button>
+                        <span style={{ fontSize: 13, minWidth: 20, textAlign: "center", color: PINK, fontWeight: 600 }}>{qty}</span>
+                        <button onClick={() => updateQty(key, 1)} style={{ ...b, width: 26, height: 26, borderRadius: "50%", border: "1px solid #333", background: "none", color: "#888", fontSize: 17 }}>+</button>
+                      </div>
+                    )}
                     <div style={{ textAlign: "right", minWidth: 100, marginLeft: 12 }}>
-                      <div style={{ fontSize: 13, color: PINK, fontWeight: 600 }}>{fmt(service.price * qty)}</div>
+                      <div style={{ fontSize: 13, color: PINK, fontWeight: 600 }}>{fmt(lineTotal)}</div>
                     </div>
                   </div>
-                ))}
+                  );
+                })}
               </div>
 
               {hasAutoDiscount && !hasNonConsult && (
@@ -1020,11 +1092,13 @@ function App() {
                         <div style={{ flex: 1, marginRight: 12 }}>
                           <div style={{ fontSize: 13, color: "#ccc" }}>{svc.name}</div>
                           {svc.autoDiscount && <div style={{ fontSize: 10, color: "#7a9e7a", marginTop: 1 }}>Includes ₦5,000 auto-discount</div>}
+                          {svc.perUnit && <div style={{ fontSize: 10, color: "#7a9e7a", marginTop: 1 }}>Per unit · min {svc.minUnits} units</div>}
                         </div>
                         <div style={{ display: "flex", alignItems: "center", gap: 8, flexShrink: 0 }}>
                           <span style={{ color: PINK, fontSize: 13 }}>₦</span>
-                          <input className="fi" type="number" min="0" value={svc.price} onChange={e => setPrice(cat, idx, e.target.value)}
+                          <input className="fi" type="number" min="0" value={svc.perUnit ? svc.unitPrice : svc.price} onChange={e => setPrice(cat, idx, e.target.value)}
                             style={{ width: 120, padding: "8px 10px", background: "#000", border: "1px solid #2a2a2a", borderRadius: 8, color: "#fff", fontSize: 13, fontFamily: "inherit", textAlign: "right" }} />
+                          {svc.perUnit && <span style={{ color: "#777", fontSize: 11 }}>/unit</span>}
                           <button className="db" onClick={() => deleteSvc(cat, idx)}
                             style={{ ...b, width: 28, height: 28, borderRadius: 6, border: "1px solid #2a2a2a", background: "transparent", color: "#555", fontSize: 13 }}>🗑</button>
                         </div>
