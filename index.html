@@ -180,7 +180,7 @@ const DEFAULT_SERVICES = {
   ],
   "Facials (Regular Pricing)": [
     { name: "Routine Facial 60 mins", price: 40000 }, { name: "Acne Facial 60 mins", price: 48000 },
-    { name: "Vitamin C Facial 60 mins", price: 48000 }, { name: "Brightening Facial 75 mins", price: 60000 },
+    { name: "Vitamin C Facial 60 mins", price: 50000 }, { name: "Brightening Facial 75 mins", price: 68000 },
     { name: "Microdermabrasion Facial 60 mins", price: 42000 }, { name: "Dermaplaning Standalone 30 mins", price: 45000 },
     { name: "Gentleman's Facial 60 mins", price: 49000 }, { name: "Dermaplaning Add-On", price: 20000 },
   ],
@@ -215,14 +215,16 @@ const DEFAULT_SERVICES = {
     { name: "Brows (W-Intro)", price: 25000 },
   ],
   "Laser - Women (Standard)": [
-    { name: "Upper Lip (W-Std)", price: 25000 }, { name: "Chin (W-Std)", price: 45000 }, { name: "Chin + Upper Lip (W-Std)", price: 70000 },
-    { name: "Cheeks (W-Std)", price: 45000 }, { name: "Sideburns (W-Std)", price: 45000 }, { name: "Neck Front (W-Std)", price: 45000 },
-    { name: "Full Face (W-Std)", price: 155000 }, { name: "Underarms (W-Std)", price: 75000 }, { name: "Half Arms (W-Std)", price: 90000 },
-    { name: "Full Arms (W-Std)", price: 120000 }, { name: "Bikini Line (W-Std)", price: 75000 }, { name: "Brazilian Full (W-Std)", price: 115000 },
-    { name: "Buttocks/Perianal Add-On (W-Std)", price: 60000 }, { name: "Chest (W-Std)", price: 75000 }, { name: "Abdomen (W-Std)", price: 60000 },
-    { name: "Full Back (W-Std)", price: 95000 }, { name: "Back + Shoulders (W-Std)", price: 125000 }, { name: "Half Legs (W-Std)", price: 85000 },
-    { name: "Full Legs (W-Std)", price: 120000 }, { name: "Full Body (W-Std)", price: 395000 },
-    { name: "Brows (W-Std)", price: 25000 },
+    { name: "Brows (W-Std)", price: 25000 }, { name: "Upper Lip (W-Std)", price: 8000 }, { name: "Chin (W-Std)", price: 24000 },
+    { name: "Chin + Upper Lip (W-Std)", price: 38000 }, { name: "Cheeks (W-Std)", price: 45000 }, { name: "Sideburns (W-Std)", price: 45000 },
+    { name: "Neck Front (W-Std)", price: 45000 }, { name: "Full Face (W-Std)", price: 73000 }, { name: "Underarms (W-Std)", price: 59000 },
+    { name: "Half Arms (W-Std)", price: 61000 }, { name: "Full Arms (W-Std)", price: 108000 }, { name: "Bikini Line (W-Std)", price: 66000 },
+    { name: "Brazilian Full (W-Std)", price: 94000 }, { name: "Buttocks/Perianal Add-On (W-Std)", price: 60000 }, { name: "Chest (W-Std)", price: 54000 },
+    { name: "Abdomen (W-Std)", price: 54000 }, { name: "Full Back (W-Std)", price: 95000 }, { name: "Back + Shoulders (W-Std)", price: 125000 },
+    { name: "Half Legs (W-Std)", price: 75000 }, { name: "Full Legs (W-Std)", price: 120000 }, { name: "Full Body (W-Std)", price: 395000 },
+    { name: "Half Face (W-Std)", price: 59000 }, { name: "Under Chin + Sides (W-Std)", price: 45000 }, { name: "Decolletage Small Area (W-Std)", price: 25000 },
+    { name: "Decolletage Full (W-Std)", price: 45000 }, { name: "Tummy Trail / Happy Trail (W-Std)", price: 25000 }, { name: "Knuckles / Fingers (W-Std)", price: 24000 },
+    { name: "Half Legs Thighs (W-Std)", price: 108000 }, { name: "Hollywood Full Intimate (W-Std)", price: 106000 }, { name: "Half Body (W-Std)", price: 254000 },
   ],
   "Laser - Men (Intro)": [
     { name: "Upper Lip (M-Intro)", price: 25000 }, { name: "Chin (M-Intro)", price: 40000 }, { name: "Chin + Upper Lip (M-Intro)", price: 60000 },
@@ -243,6 +245,15 @@ const DEFAULT_SERVICES = {
     { name: "Back + Shoulders (M-Std)", price: 155000 }, { name: "Half Legs (M-Std)", price: 110000 }, { name: "Full Legs (M-Std)", price: 155000 },
     { name: "Full Body (M-Std)", price: 465000 },
     { name: "Head (M-Std)", price: 195000 },
+  ],
+  "Add-Ons & Skin Enhancements": [
+    { name: "Poker Face (Microneedling)", price: 120000 }, { name: "Baddie Blood Facial (Microneedling + PRP)", price: 130000 },
+    { name: "The Upgrade (Microneedling + Exosomes)", price: 200000 }, { name: "Glass Act (Glutanex Skin Booster)", price: 180000 },
+    { name: "Peel Good (Superficial Peel)", price: 62000 }, { name: "The Big Peel (TCA Peel)", price: 110000 },
+    { name: "Back That Up (Back-Acne Facial)", price: 110000 }, { name: "Thirst Trap (Hydra Facial)", price: 60000 },
+    { name: "Red Light Special (LED Therapy)", price: 25000 }, { name: "The Cookie Facial (Vagacial)", price: 55000 },
+    { name: "Snap Back (RF Skin Tightening)", price: 60000 }, { name: "Wide Awake (PRP Under-Eye)", price: 120000 },
+    { name: "Hair Force One (PRP Hair, single)", price: 150000 }, { name: "Hair Force One (PRP Hair, course of 3)", price: 400000 },
   ],
 };
 
@@ -642,7 +653,7 @@ function App() {
       <div style={{ background: "#000", borderBottom: "1px solid rgba(243,194,215,0.3)", padding: "14px 16px", display: "flex", alignItems: "center", justifyContent: "space-between", position: "sticky", top: 0, zIndex: 100, gap: 8 }}>
         <div style={{ flexShrink: 0 }}>
           <div style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: 19, color: PINK, letterSpacing: 1 }}>THE BADDIE LAB</div>
-          <div style={{ fontSize: 8, color: "#555", letterSpacing: 2, textTransform: "uppercase", marginTop: 1 }}>Service Price Calculator · Updated 28 Mar 2026</div>
+          <div style={{ fontSize: 8, color: "#555", letterSpacing: 2, textTransform: "uppercase", marginTop: 1 }}>Service Price Calculator · Updated 28 JULY 2026</div>
         </div>
         <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
           {["select", "checkout", ...(isAdmin ? ["admin"] : [])].map(t => (
